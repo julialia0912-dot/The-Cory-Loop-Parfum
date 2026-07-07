@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cozy Loop - Elegant Perfume Store</title>
+    <!-- Font & Icon Pack Premium -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Reset & Core Style (WordPress Theme Style) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #fdfbfc; /* Warna latar bersih & lembut */
+            color: #2d2d2d;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            background: #ffffff;
+            padding: 20px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #8c7662; /* Warna earth-tone estetik khas Cozy Loop */
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        nav ul li a {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li.active a {
+            color: #8c7662;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 22px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -7px;
+            right: -10px;
+            background: #8c7662;
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: 600;
+        }
+
+        /* --- Hero Banner Section --- */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.35)), url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=1920') no-repeat center center/cover;
+            height: 65vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+        }
+
+        .btn-shop {
+            background: #ffffff;
+            color: #1a1a1a;
+            padding: 14px 40px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-shop:hover {
+            background: #8c7662;
+            color: #fff;
+        }
+
+        /* --- Main Store Catalog --- */
+        .store-container {
+            max-width: 1200px;
+            margin: 70px auto;
+            padding: 0 25px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 26px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .section-title p {
+            font-size: 14px;
+            color: #777;
+            font-weight: 300;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: #8c7662;
+            margin: 15px auto 0;
+        }
+
+        /* --- Product Grid --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 35px;
+        }
+
+        .product-card {
+            background: #fff;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Badge Diskon Minimalis */
+        .sale-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #8c7662;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 4px 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        /* Area Foto Produk */
+        .product-image {
+            width: 100%;
+            height: 340px;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Efek Zoom Halus saat Hover */
+        .product-card:hover .product-image img {
+            transform: scale(1.06);
+        }
+
+        /* Tombol Add To Cart Melayang Khas WooCommerce Modern */
+        .add-to-cart-overlay {
+            position: absolute;
+            bottom: -55px;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 26, 0.95);
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: bottom 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+
+        .product-card:hover .add-to-cart-overlay {
+            bottom: 0;
+        }
+
+        /* Detail Informasi Produk */
+        .product-info {
+            padding: 20px 10px;
+            text-align: center;
+        }
+
+        .product-cat {
+            font-size: 11px;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .product-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .product-title a:hover {
+            color: #8c7662;
+        }
+
+        .product-price {
+            font-size: 14px;
+            font-weight: 600;
+            color: #8c7662;
+            letter-spacing: 0.5px;
+        }
+
+        .product-price span.old-price {
+            text-decoration: line-through;
+            color: #c0c0c0;
+            margin-right: 8px;
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #111111;
+            color: #888888;
+            padding: 50px 5% 30px;
+            text-align: center;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            margin-top: 100px;
+            border-top: 1px solid #222;
+        }
+
+        footer p {
+            margin-bottom: 20px;
+        }
+
+        .footer-socials a {
+            margin: 0 12px;
+            font-size: 16px;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .footer-socials a:hover {
+            color: #8c7662;
+        }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 768px) {
+            nav { display: none; } /* Menyembunyikan menu di HP agar tetap clean */
+            .hero h1 { font-size: 28px; }
+            .hero p { font-size: 14px; }
+            .product-image { height: 280px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER & NAVIGASI -->
+    <header>
+        <div class="logo">Cozy<span>Loop</span></div>
+        <nav>
+            <ul>
+                <li class="active"><a href="#">Beranda</a></li>
+                <li><a href="#">Semua Parfum</a></li>
+                <li><a href="#">Terlaris</a></li>
+                <li><a href="#">Kontak</a></li>
+            </ul>
+        </nav>
+        <div class="header-icons">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <div class="cart-icon" onclick="alert('Keranjang belanja dibuka!')">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="cart-count" id="cart-counter">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SPANDUK UTAMA -->
+    <div class="hero">
+        <h1>Aroma Yang Menemukanmu</h1>
+        <p>Eksplorasi koleksi parfum premium edisi terbatas dengan nuansa kehangatan dan kemewahan yang tahan lama.</p>
+        <button class="btn-shop" onclick="document.getElementById('catalog').scrollIntoView({behavior: 'smooth'});">Jelajahi Produk</button>
+    </div>
+
+    <!-- KATALOG PRODUK -->
+    <div class="store-container" id="catalog">
+        <div class="section-title">
+            <h2>Koleksi Terlaris</h2>
+            <p>Varian parfum terbaik pilihan pelanggan minggu ini</p>
+        </div>
+
+        <!-- GRID PRODUK -->
+        <div class="product-grid">
+            
+            <!-- Produk 1 -->
+            <div class="product-card">
+                <span class="sale-badge">Sale</span>
+                <div class="product-image">
+                    <!-- Menggunakan gambar placeholder botol parfum estetik -->
+                    <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=600" alt="Parfum Velvet">
+                    <div class="add-to-cart-overlay" onclick="addToCart()">Tambah Ke Keranjang</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-cat">Eau De Parfum</div>
+                    <h3 class="product-title"><a href="#">Velvet Warmth No. 04</a></h3>
+                    <div class="product-price">
+                        <span class="old-price">Rp850.000</span>Rp620.000
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produk 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=600" alt="Parfum Signature">
+                    <div class="add-to-cart-overlay" onclick="addToCart()">Tambah Ke Keranjang</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-cat">Unisex Fragrance</div>
+                    <h3 class="product-title"><a href="#">Cozy Loop Signature</a></h3>
+                    <div class="product-price">Rp1.150.000</div>
+                </div>
+            </div>
+
+            <!-- Produk 3 -->
+            <div class="product-card">
+                <span class="sale-badge">Sale</span>
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=600" alt="Parfum Midnight">
+                    <div class="add-to-cart-overlay" onclick="addToCart()">Tambah Ke Keranjang</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-cat">Oud & Wood Series</div>
+                    <h3 class="product-title"><a href="#">Midnight Amber</a></h3>
+                    <div class="product-price">
+                        <span class="old-price">Rp1.400.000</span>Rp1.250.000
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produk 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=600" alt="Parfum Ocean">
+                    <div class="add-to-cart-overlay" onclick="addToCart()">Tambah Ke Keranjang</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-cat">Fresh Summer</div>
+                    <h3 class="product-title"><a href="#">Ocean Breeze Pure</a></h3>
+                    <div class="product-price">Rp790.000</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 CozyLoop Perfume. Desain terinspirasi oleh WordPress Premium Theme.</p>
+        <div class="footer-socials">
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+    </footer>
+
+    <!-- SCRIPT INTERAKTIF -->
+    <script>
+        let currentCartCount = 0;
+
+        function addToCart() {
+            currentCartCount++;
+            document.getElementById('cart-counter').innerText = currentCartCount;
+            alert('Sukses! Parfum berhasil dimasukkan ke keranjang.');
+        }
+    </script>
+</body>
+</html>
